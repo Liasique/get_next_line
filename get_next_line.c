@@ -14,13 +14,24 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!stash)
 		stash = gnl_strdup("");
-	r = read(fd, buf, 1);
-	if (r <= 0)
-		return (stash);
-	buf[1] = '\0';
-	tmp = stash;
-	stash = gnl_strjoin(stash, buf);
-	free(tmp);
+	if (!stash)
+		return (NULL);
+
+	r = 1;
+	while (r > 0 && !gnl_strchr(stash, '\n'))
+	{
+		r = read(fd, buf, 1);
+		if (r < 0)
+			return (NULL);
+		if (r == 0)
+			break;
+		buf[1] = '\0';
+		tmp = stash;
+		stash = gnl_strjoin(stash, buf);
+		free(tmp);
+		if (!stash)
+			return (NULL);
+	}
 	return (stash);
 }
 
