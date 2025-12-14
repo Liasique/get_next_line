@@ -9,14 +9,15 @@ char *get_next_line(int fd)
 
 	(void)fd;
 	if (!stash)
-		stash = gnl_strdup("INIT");
+		stash = gnl_strdup("");
 	return (stash);
 }
 
 int	main(void)
 {
 	int		fd;
-	char    *line;
+	char	*line1;
+	char	*line2;
 
 	fd = open("file.txt", O_RDONLY);
 	if (fd < 0)
@@ -24,8 +25,10 @@ int	main(void)
 		perror("open");
 		return (1);
 	}
-	line = get_next_line(fd);
-    printf("line = %s\n", line);
+	line1 = get_next_line(fd);
+	printf("line1 = %s\n", line1);
+	line2 = get_next_line(fd);
+	printf("line2 = %s\n", line2);
 	close(fd);
 	return (0);
 }
