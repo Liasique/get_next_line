@@ -11,3 +11,23 @@ size_t	gnl_strlen(const char *s)
 		i++;
 	return (i);
 }
+
+char	*gnl_strdup(const char *s)
+{
+	size_t	i;
+	char	*copy;
+
+	if (!s)
+		return (NULL);
+	copy = malloc(gnl_strlen(s) + 1);
+	if (!copy)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		copy[i] = s[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
+}

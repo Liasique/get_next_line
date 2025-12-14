@@ -3,17 +3,20 @@
 #include <stdio.h>   // printf
 #include <unistd.h>  // close
 
-// char *get_next_line(int fd)
-// {
-//     gnl_strlen()
-// }
+char *get_next_line(int fd)
+{
+	static char	*stash;
 
-
+	(void)fd;
+	if (!stash)
+		stash = gnl_strdup("INIT");
+	return (stash);
+}
 
 int	main(void)
 {
 	int		fd;
-	size_t	n;
+	char    *line;
 
 	fd = open("file.txt", O_RDONLY);
 	if (fd < 0)
@@ -21,8 +24,12 @@ int	main(void)
 		perror("open");
 		return (1);
 	}
-	n = gnl_strlen("Hello");
-	printf("strlen = %zu\n", n);
+	line = get_next_line(fd);
+    printf("line = %s\n", line);
 	close(fd);
 	return (0);
 }
+
+// cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 \
+// get_next_line.c get_next_line_utils.c \
+// -o test && ./test
