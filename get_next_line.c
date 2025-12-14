@@ -3,13 +3,24 @@
 #include <stdio.h>   // printf
 #include <unistd.h>  // close
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*stash;
+	char		buf[2];
+	ssize_t		r;
+	char		*tmp;
 
-	(void)fd;
+	if (fd < 0)
+		return (NULL);
 	if (!stash)
 		stash = gnl_strdup("");
+	r = read(fd, buf, 1);
+	if (r <= 0)
+		return (stash);
+	buf[1] = '\0';
+	tmp = stash;
+	stash = gnl_strjoin(stash, buf);
+	free(tmp);
 	return (stash);
 }
 
