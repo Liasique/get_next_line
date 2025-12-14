@@ -19,7 +19,7 @@ char	*gnl_strdup(const char *s)
 
 	if (!s)
 		return (NULL);
-	copy = malloc(gnl_strlen(s) + 1);
+	copy = (char *)malloc(gnl_strlen(s) + 1);
 	if (!copy)
 		return (NULL);
 	i = 0;
@@ -41,7 +41,7 @@ char	*gnl_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 
-	res = malloc(gnl_strlen(s1) + gnl_strlen(s2) + 1);
+	res = (char *)malloc(gnl_strlen(s1) + gnl_strlen(s2) + 1);
 	if (!res)
 		return (NULL);
 
